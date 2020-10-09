@@ -20,40 +20,35 @@ export default function Character(props) {
   const [frontImg, setFrontImg] = useState("");
   const [backImg, setBackImg] = useState("");
 
-
-
-
-useEffect(() => {
+  useEffect(() => {
     if (name) {
-        axios
-          .get(`https://pokeapi.co/api/v2/pokemon-form/${name}/`)
-          .then((res) => {
-            setFrontImg(res.data.sprites.front_default);
-            setBackImg(res.data.sprites.back_default);
-          })
-          .catch((err) => {
-            debugger;
-          });
-    
-          axios
-          .get(url)
-          .then((res) => {
-            console.log(res.data);
-            setCharacter(res.data);
-          })
-          .catch((err) => {
-            debugger;
-          });
-      }
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon-form/${name}/`)
+        .then((res) => {
+          setFrontImg(res.data.sprites.front_default);
+          setBackImg(res.data.sprites.back_default);
+        })
+        .catch((err) => {
+          debugger;
+        });
 
-},[]) 
-
+      axios
+        .get(url)
+        .then((res) => {
+        //   console.log(res.data);
+          setCharacter(res.data);
+        })
+        .catch((err) => {
+          debugger;
+        });
+    }
+  }, []);
 
   return (
     <StyledCharacter className="container">
       <h2>{name && `${name.charAt(0).toUpperCase()}${name.slice(1)}`}</h2>
-      <img src={frontImg} />
-      <img src={backImg} />
+      <img src={frontImg} alt={`front of a pokemon: ${name}`} />
+      <img src={backImg} alt={`back of a pokemon: ${name}`}/>
       <h4>Height: {character.height}</h4>
       <h4>Weight: {character.weight}</h4>
     </StyledCharacter>
